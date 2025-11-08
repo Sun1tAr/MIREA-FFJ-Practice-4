@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class InMemoryTaskRepositoryImplTest {
 
-    private final int TEST_LIST_SIZE = 90;
+    private final int TEST_LIST_SIZE = 91;
 
     private TaskRepository repository;
 
@@ -33,6 +33,7 @@ class InMemoryTaskRepositoryImplTest {
         for (int i = 0; i < TEST_LIST_SIZE; i++) {
             testsTasks.add(Task.builder()
                     .title("Title_" + i)
+                    .done(i % 2 != 0)
                     .build());
         }
     }
@@ -128,6 +129,24 @@ class InMemoryTaskRepositoryImplTest {
 
         assertTrue(repository.deleteTask(gotTask));
         assertFalse(repository.deleteTask(gotTask));
+    }
+
+    @Test
+    public void tryGetTasksWithDone() {
+        testsTasks.forEach(task -> {repository.saveTask(task);});
+        List<Task> doneTasks = repository.getDoneTasks(true);
+        assertEquals(TEST_LIST_SIZE/2, doneTasks.size());
+        List<Task> undoneTasks = repository.getDoneTasks(false);
+        assertEquals(TEST_LIST_SIZE - TEST_LIST_SIZE/2, undoneTasks.size());
+    }
+
+    @Test
+    public void tryGetPaginatedTasksWithDone() {
+        testsTasks.forEach(task -> {repository.saveTask(task);});
+        List<Task> doneTasks = repository.getPaginatedDoneTasks(1, TEST_LIST_SIZE, true);
+        assertEquals(TEST_LIST_SIZE/2, doneTasks.size());
+        List<Task> undoneTasks = repository.getPaginatedDoneTasks(1, TEST_LIST_SIZE, false);
+        assertEquals(TEST_LIST_SIZE - TEST_LIST_SIZE/2, undoneTasks.size());
     }
 
 

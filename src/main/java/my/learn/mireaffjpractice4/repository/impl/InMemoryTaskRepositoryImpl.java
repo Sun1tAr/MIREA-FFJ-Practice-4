@@ -3,6 +3,7 @@ package my.learn.mireaffjpractice4.repository.impl;
 import lombok.AllArgsConstructor;
 import my.learn.mireaffjpractice4.model.Task;
 import my.learn.mireaffjpractice4.repository.TaskRepository;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -25,7 +26,7 @@ public class InMemoryTaskRepositoryImpl implements TaskRepository {
     }
 
     @Override
-    public void saveTask(Task t) {
+    public void saveTask(@NotNull Task t) {
         t.setId(idGenerator.addAndGet(1));
         storage.put(t.getId(), t);
     }
@@ -76,8 +77,22 @@ public class InMemoryTaskRepositoryImpl implements TaskRepository {
     }
 
     @Override
-    public Boolean deleteTask(Task t) {
+    public Boolean deleteTask(@NotNull Task t) {
         Task removed = storage.remove(t.getId());
         return removed != null;
+    }
+
+    @Override
+    public List<Task> getDoneTasks(Boolean status) {
+        return getTasks().stream()
+                .filter(task -> task.getDone().equals(status))
+                .toList();
+    }
+
+    @Override
+    public List<Task> getPaginatedDoneTasks(Integer page, Integer limit, Boolean status) {
+        return getPaginatedTasks(page, limit).stream()
+                .filter(task -> task.getDone().equals(status))
+                .toList();
     }
 }

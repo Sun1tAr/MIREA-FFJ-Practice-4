@@ -14,4 +14,7 @@ public interface TaskRepository {
     void updateTask(Task t);
     Boolean deleteTask(Task t);
 
+    List<Task> getDoneTasks(Boolean status);
+    List<Task> getPaginatedDoneTasks(Integer page, Integer limit,  Boolean status);
+
 }
