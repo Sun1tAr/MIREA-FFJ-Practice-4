@@ -94,35 +94,35 @@ MIREA-FFJ-Practice-4/
 ### Примеры запросов
 `GET /tasks` без параметров
 
-![img_3.png](img_3.png)
+![img_3.png](about/img_3.png)
 
 `POST /tasks` успешная валидация
 
-![img.png](img.png)
+![img.png](about/img.png)
 
 `POST /tasks` ошибка валидации
 
-![img_1.png](img_1.png)
+![img_1.png](about/img_1.png)
 
 `GET /tasks/{id}`
 
-![img_4.png](img_4.png)
+![img_4.png](about/img_4.png)
 
 `PUT /tasks/{id}`
 
-![img_2.png](img_2.png)
+![img_2.png](about/img_2.png)
 
 `DELETE /tasks/{id}`
 
-![img_7.png](img_7.png)
+![img_7.png](about/img_7.png)
 
 `GET /tasks` с фильтром по done
 
-![img_6.png](img_6.png)
+![img_6.png](about/img_6.png)
 
 `GET /tasks` с пагинацией
 
-![img_5.png](img_5.png)
+![img_5.png](about/img_5.png)
 
 ### Пример тестирования
 
