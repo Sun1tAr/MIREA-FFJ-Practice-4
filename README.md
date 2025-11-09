@@ -94,50 +94,51 @@ MIREA-FFJ-Practice-4/
 ### Примеры запросов
 `GET /tasks` без параметров
 
-
+![img_3.png](img_3.png)
 
 `POST /tasks` успешная валидация
 
-
+![img.png](img.png)
 
 `POST /tasks` ошибка валидации
 
-
+![img_1.png](img_1.png)
 
 `GET /tasks/{id}`
 
-
+![img_4.png](img_4.png)
 
 `PUT /tasks/{id}`
 
-
+![img_2.png](img_2.png)
 
 `DELETE /tasks/{id}`
 
-
+![img_7.png](img_7.png)
 
 `GET /tasks` с фильтром по done
 
-
+![img_6.png](img_6.png)
 
 `GET /tasks` с пагинацией
 
+![img_5.png](img_5.png)
 
 ### Пример тестирования
 
-| Маршрут                | Запрос (пример)                                | Ожидаемый ответ                    | Фактический ответ                             |
-|------------------------|------------------------------------------------|------------------------------------|-----------------------------------------------|
-| **POST /tasks**        | `{"title":"Задача 1"}`                         | 201 Created + JSON новой задачи    | 201, задача создана                           |
-| **POST /tasks**        | `{"title":"3a"}`                               | 422 Unprocessable Entity           | 422, `{"error":"title must be 3..100 chars"}` |
-| **GET /tasks**         | без параметров                                 | 200 OK + полный список задач       | 200, список JSON                              |
-| **GET /tasks**         | `?done=true`                                   | 200 OK + список выполненных задач  | 200, JSON только с `done=true`                |
-| **GET /tasks**         | `?page=1&limit=2`                              | 200 OK + первые 2 задачи           | 200, вернулись задачи 1 и 3                   |
-| **GET /tasks/{id}**    | `/tasks/7`                                     | 200 OK + JSON задачи               | 200, вернулась задача id=7                    |
-| **GET /tasks/{id}**    | `/tasks/999` (несуществующий)                  | 404 Not Found                      | 404, `{"error":"task not found"}`             |
-| **PUT /tasks/{id}**    | `/tasks/7` + `{"title":"qwerty","done":true}`  | 200 OK + обновлённая задача        | 200, обновление прошло                        |
-| **PUT /tasks/{id}**    | `/tasks/999` + `{"title":"Fail","done":true}`  | 404 Not Found                      | 404, `{"error":"task not found"}`             |
-| **DELETE /tasks/{id}** | `/tasks/2`                                     | 204 No Content                     | 204, задача удалена                           |
-| **DELETE /tasks/{id}** | `/tasks/999`                                   | 404 Not Found                      | 404, `{"error":"task not found"}`             |
+| Маршрут                | Запрос (пример)                                | Ожидаемый ответ                   | Фактический ответ                             |
+|------------------------|------------------------------------------------|-----------------------------------|-----------------------------------------------|
+| **POST /tasks**        | `{"title":"Задача 1"}`                         | 201 Created + JSON новой задачи   | 201, задача создана                           |
+| **POST /tasks**        | `{"title":"3a"}`                               | 400 Bad request                   | 400, `{"message": "Validation failed","errors": {"title": "размер должен находиться в диапазоне от 3 до 100"},"status": 400}` |
+| **GET /tasks**         | без параметров                                 | 200 OK + полный список задач      | 200, список JSON                              |
+| **GET /tasks**         | `?done=true`                                   | 200 OK + список выполненных задач | 200, JSON только с `done=true`                |
+| **GET /tasks**         | `?page=1&limit=2`                              | 200 OK + первые 2 задачи          | 200, вернулись задачи 1 и 3                   |
+| **GET /tasks/{id}**    | `/tasks/7`                                     | 200 OK + JSON задачи              | 200, вернулась задача id=7                    |
+| **GET /tasks/{id}**    | `/tasks/999` (несуществующий)                  | 404 Not Found                     | 404, `{"error":"task not found"}`             |
+| **PUT /tasks/{id}**    | `/tasks/7` + `{"title":"qwerty","done":true}`  | 200 OK + обновлённая задача       | 200, обновление прошло                        |
+| **PUT /tasks/{id}**    | `/tasks/999` + `{"title":"Fail","done":true}`  | 404 Not Found                     | 404, `{"error":"task not found"}`             |
+| **DELETE /tasks/{id}** | `/tasks/2`                                     | 204 No Content                    | 204, задача удалена                           |
+| **DELETE /tasks/{id}** | `/tasks/999`                                   | 404 Not Found                     | 404, `{"error":"task not found"}`             |
 
 
 ## Выводы

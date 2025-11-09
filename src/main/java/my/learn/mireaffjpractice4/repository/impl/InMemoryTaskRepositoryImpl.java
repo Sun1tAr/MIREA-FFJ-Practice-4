@@ -41,24 +41,7 @@ public class InMemoryTaskRepositoryImpl implements TaskRepository {
     @Override
     public List<Task> getPaginatedTasks(Integer page, Integer limit) {
         List<Task> tasks = getTasks();
-        if (limit > tasks.size()) {
-            return tasks;
-        }
-        int startIndex = (page - 1) * limit;
-
-        if (startIndex >= tasks.size()) {
-            return List.of();
-        }
-        int endIndex = startIndex + limit;
-        if (endIndex > tasks.size()) {
-            endIndex = tasks.size() - 1;
-        }
-
-        List<Task> paginatedTasks = new ArrayList<>();
-        for (int i = startIndex; i < endIndex; i++) {
-            paginatedTasks.add(tasks.get(i));
-        }
-        return paginatedTasks;
+        return getPaginatedTasksFromList(page, limit, tasks);
     }
 
     @Override
@@ -91,8 +74,35 @@ public class InMemoryTaskRepositoryImpl implements TaskRepository {
 
     @Override
     public List<Task> getPaginatedDoneTasks(Integer page, Integer limit, Boolean status) {
-        return getPaginatedTasks(page, limit).stream()
-                .filter(task -> task.getDone().equals(status))
-                .toList();
+        return getPaginatedTasksFromList(page, limit, getDoneTasks(status));
+    }
+
+    private List<Task> getPaginatedTasksFromList(Integer page, Integer limit, List<Task> tasks) {
+        if (limit > tasks.size()) {
+            if (page > 1) {
+                return List.of();
+            } else {
+                return tasks;
+            }
+        }
+        int startIndex = (page - 1) * limit;
+
+        if (startIndex >= tasks.size()) {
+            return List.of();
+        }
+        int endIndex = startIndex + limit;
+        if (endIndex > tasks.size()) {
+            endIndex = tasks.size() - 1;
+        }
+
+        if (startIndex == endIndex) {
+            return List.of(tasks.get(startIndex));
+        }
+
+        List<Task> paginatedTasks = new ArrayList<>();
+        for (int i = startIndex; i < endIndex; i++) {
+            paginatedTasks.add(tasks.get(i));
+        }
+        return paginatedTasks;
     }
 }

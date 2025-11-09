@@ -13,5 +13,5 @@ public class UpdateTaskRequest {
     private String title;
 
     @NotNull
-    private Boolean status;
+    private Boolean done;
 }

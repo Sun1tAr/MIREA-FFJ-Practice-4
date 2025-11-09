@@ -89,7 +89,7 @@ public class TaskServiceImpl implements TaskService {
         }
         Task t = byId.get();
         t.setTitle(request.getTitle());
-        t.setDone(false);
+        t.setDone(request.getDone());
         t.setUpdatedAt(LocalDateTime.now());
         taskRepository.updateTask(t);
         return mapTaskToDTO(t);

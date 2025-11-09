@@ -1,5 +1,6 @@
 package my.learn.mireaffjpractice4.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import my.learn.mireaffjpractice4.dto.request.CreateTaskRequest;
 import my.learn.mireaffjpractice4.dto.request.UpdateTaskRequest;
@@ -28,7 +29,7 @@ public class TaskController {
     }
 
     @PostMapping
-    public ResponseEntity<TaskDTO> createTask(@RequestBody CreateTaskRequest createTaskRequest) {
+    public ResponseEntity<TaskDTO> createTask(@RequestBody @Valid CreateTaskRequest createTaskRequest) {
         return new ResponseEntity<>(
                 taskService.createAndSaveTask(createTaskRequest),
                 HttpStatus.CREATED
